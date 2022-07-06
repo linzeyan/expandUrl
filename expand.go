@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func ExpandUrl(url string) (string, error) {
+func Expand(url string) (string, error) {
 	const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
 	var result string
 	result = url
