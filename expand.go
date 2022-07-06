@@ -32,6 +32,9 @@ func Expand(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	if req.Host == "reurl.cc" && resp.Header.Get("Target") != "" {
+		result = resp.Header.Get("Target")
+	}
 
 	return result, nil
 }
