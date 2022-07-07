@@ -2,24 +2,28 @@ package expandUrl
 
 import (
 	"net/http"
+	"net/url"
 )
 
-func Expand(url string) (string, error) {
+func Expand(uri string) (string, error) {
 	const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
-	var result string
-	result = url
+	_, err := url.ParseRequestURI(uri)
+	if err != nil {
+		return "", err
+	}
 
+	var result = uri
 	var client = &http.Client{
+		Transport: &http.Transport{
+			DisableKeepAlives: true,
+		},
 		CheckRedirect: func(req *http.Request, _ []*http.Request) error {
 			result = req.URL.String()
 			return nil
 		},
-		Transport: &http.Transport{
-			DisableKeepAlives: true,
-		},
 	}
 
-	var req, err = http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequest(http.MethodGet, uri, nil)
 	if err != nil {
 		return "", err
 	}

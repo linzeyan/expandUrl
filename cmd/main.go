@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -19,16 +18,14 @@ var rootCmd = &cobra.Command{
 var url string
 
 func rootCmdRun(_ *cobra.Command, _ []string) {
-	var resp, err = expandUrl.Expand(url)
+	_, err := expandUrl.Expand(url)
 	if err != nil {
 		log.Println(err)
-		os.Exit(1)
 	}
-	fmt.Println(resp)
 }
 
 func main() {
-	rootCmd.Flags().StringVarP(&url, "URL", "u", "", "Specify URL to expand")
+	rootCmd.Flags().StringVarP(&url, "url", "u", "", "Specify URL to expand")
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
